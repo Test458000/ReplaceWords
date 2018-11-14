@@ -1,4 +1,5 @@
 function ped_go () {
+	// body change
 	let a = document.body.innerHTML;
 	document.body.innerHTML = a.replace(/Россия/g, 'Педерация');
 	a = document.body.innerHTML;
@@ -11,6 +12,11 @@ function ped_go () {
 	document.body.innerHTML = a.replace(/Росії/g, 'Педерації');
 	a = document.body.innerHTML;
 	document.body.innerHTML = a.replace(/Росією/g, 'Педерацією');
+	a = document.body.innerHTML;
+	document.body.innerHTML = a.replace(/Росси́я/g, 'Педерация');
+	a = document.body.innerHTML;
+	
+	// Title change
 	let b = document.title;
 	document.title = b.replace(/Россия/g, 'Педерация');
 	b = document.title;
