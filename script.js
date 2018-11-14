@@ -1,4 +1,4 @@
-window.onload function ped_go () {
+function ped_go () {
 	let a = document.body.innerHTML;
 	document.body.innerHTML = a.replace(/Россия/g, 'Педерация');
 	a = document.body.innerHTML;
