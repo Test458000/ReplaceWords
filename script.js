@@ -15,6 +15,9 @@ function ped_go () {
 	a = document.body.innerHTML;
 	document.body.innerHTML = a.replace(/Росси́я/g, 'Педерация');
 	a = document.body.innerHTML;
+	document.body.innerHTML = a.replace(/Россию/g, 'Педерацию');
+	a = document.body.innerHTML;
+	document.body.innerHTML = a.replace(/Росію/g, 'Педерацію');
 	
 	// Title change
 	let b = document.title;
