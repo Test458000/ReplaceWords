@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Rosped",
 	"description": "Неправильное слово Россия заменяется на правильное Педерация. Добавлено Педерацию",
-	"version": "1.3",
+	"version": "1.02",
 	"icons": {"64": "icon-64.png"},
   	"content_scripts": [
 		{
