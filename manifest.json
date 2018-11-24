@@ -1,9 +1,17 @@
 {
 	"manifest_version": 2,
 	"name": "Rosped",
-	"description": "Неправильное слово Россия заменяется на правильное Педерация. Добавлено Педерацию",
-	"version": "1.4",
+	"description": "Replace some words in a web page using an inner dictionary",
+	"version": "1.5",
 	"icons": {"64": "icon-64.png"},
+	"permissions": [
+          "storage",
+		  "tabs"
+        ],
+	"background": {
+		"scripts": ["background.js"],
+		"persistent": false
+		},
   	"content_scripts": [
 		{
 			"matches": [ "<all_urls>" ],
