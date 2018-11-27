@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "Rosped",
 	"description": "Replace some words in a web page using an inner dictionary",
-	"version": "1.5",
+	"version": "1.55",
 	"icons": {"64": "icon-64.png"},
 	"permissions": [
           "storage",
