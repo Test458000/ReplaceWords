@@ -1,8 +1,8 @@
 {
 	"manifest_version": 2,
-	"name": "Rosped",
+	"name": "ReWords",
 	"description": "Replace some words in a web page using an inner dictionary",
-	"version": "1.55",
+	"version": "1.6",
 	"icons": {"64": "icon-64.png"},
 	"permissions": [
           "storage",

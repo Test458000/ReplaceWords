@@ -26,26 +26,23 @@ function setDict () {                // Load and write a dictionary
 			let resultResp = response.json();
 			return resultResp;
 		})
-		.then ( dictRes => {           // Create a new object from Request
+		/*.then ( dictRes => {           // Create a new object from Request
 			dictLast = checkDictWords (dictRes);
-			return dictLast;
-		})
-		.then ( dictLast => {           // Write a dictionary to Chrome
-			chrome.storage.local.set(dictLast, function () {
-			//dictRead(dictRes);
-			//alert (dictLast);
-			//dictRead(dictLast);
-			});	
+			return dictLast;	
+		})*/
+		.then ( dictLast => {           // Write a dictionary to chrome.storage
+			chrome.storage.local.set({dictionary: dictLast});	
 		return dictLast;
 		})
 		.then ( dictLast => {  			// Return a dictionary to the main script
+			alert (dictLast);
 			chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-				chrome.tabs.sendMessage(tabs[0].id, {dictLast});				
+				chrome.tabs.sendMessage(tabs[0].id, {answer: 'ready'});				
 			});	
 		});
 };
 
-function dictRead(dictRes) {
+function dictRead (dictRes) { 		// Read a dictionary for check in any function
 	for (let i in dictRes) {
 		let dictResI = dictRes[i];
 		//alert(i);

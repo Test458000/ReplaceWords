@@ -1,26 +1,39 @@
-let dict;
+let dict, dictLast;
+
 checkDict ();
 
 function checkDict () {             // Check is a dicionary exist
 	if (!dict) {
 		chrome.extension.sendMessage('get me a dictionary');
 	} 
-	else hrome.storage.local.get(dictLast, function (res) {
-		dict = dictLast;
-		replaceWords(dict);
-	});	
+	else {replaceWords()}	
 };
 
-chrome.runtime.onMessage.addListener( 			 //Get a dictionary from a background page
-  function(request, sender, sendResponse) {
-    if (request.dictLast){
-		dict = request.dictLast;
-		//alert (dict);
-		replaceWords (dict);
-	};
-  });	
+chrome.runtime.onMessage.addListener( 			 //Check is a dictionary ready from chrome.storage.local
+	function(request, sender, sendResponse) {
+		if (request.answer == 'ready') {
+			//alert (request.answer);
+			chrome.storage.local.get(['dictionary'], function (res) {
+				dict = res.dictionary;
+				alert (dict);
+				replaceWords();
+			});
+		};	
+	});
 
-function replaceWords (dict) {      // Replace words on a page from dictionary
+function getDict () {
+	chrome.storage.local.get(['dictionary'], function (res) {
+	dict = res.dictionary;
+	//alert (dict);
+	});
+}
+
+/*function textParcing () {
+	let textP;
+	str.split(
+};*/
+
+function replaceWords () {      // Replace words on a page from dictionary
 		//alert (dict);
 		let bodyPage = document.body.innerHTML; //body change
 		let titlePage = document.title;	 //title change
@@ -36,7 +49,7 @@ function replaceWords (dict) {      // Replace words on a page from dictionary
 		document.title = titlePage;		
 };
 
-function dictRead(dictRes) {
+function dictRead(dictRes) { 		// Read a dictionary for check in any function
 	for (let i in dictRes) {
 		let dictResI = dictRes[i];
 		//alert(i);
