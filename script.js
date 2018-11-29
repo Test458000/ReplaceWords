@@ -1,28 +1,33 @@
 chrome.storage.local.get (['dictionary'], function (res) {
     if (res.dictionary) {
-        let dict = res.dictionary;
-        //alert (dict);
-        replaceWords(dict);
+        replaceWords(res.dictionary);
 	} //else {chrome.extension.sendMessage('get me a dictionary');}
 });
 
 function replaceWords (dict) {
 	// Replace words on a page from dictionary
-		//alert (dict);
-		let bodyPage = document.body.innerHTML; //body change
-		let titlePage = document.title;	 //title change
-		for (let i in dict) {
-			let dictI = dict[i];
-			//alert (i);
-			for (let j in dictI) {
-				bodyPage = bodyPage.replace(new RegExp(j,"g"), dictI[j]);
-				titlePage = titlePage.replace(new RegExp(j,"g"), dictI[j]);
-			}
-		}
-		document.body.innerHTML = bodyPage;
-		document.title = titlePage;		
-};
-
+	let textReplace = [];
+	let bodyPage = document.body.innerHTML; //body change
+    let titlePage = document.title;	 //title change
+    let textArr = bodyPage.match(/>(.*?)</g);
+	// Loops for language
+    for (let i in dict) {
+        let dictI = dict[i];
+        // Loops for replace words for this language
+        for (let j in dictI) {
+            // Loops each text for replace words and replace text
+            for (let n = 0; n < textArr.length; n++) {
+                if (textArr[n].indexOf(j) !== -1) {
+                    textReplace[n] = textArr[n].replace(new RegExp(j, "g"), dictI[j]);
+                    titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
+                    bodyPage = bodyPage.replace(textArr[n], textReplace[n]);
+                }
+            }
+        }
+    }
+	document.body.innerHTML = bodyPage;
+	document.title = titlePage;
+}
 
 // Extension functions - not for use in general code
 
@@ -36,4 +41,4 @@ function dictRead(dictRes) { 		// Read a dictionary for check in any function
 			alert (dictResI[j]);
 		}
 	}		
-};
+}
