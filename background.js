@@ -3,19 +3,29 @@
 const config = {
 	dictUrl : "http://sbox.pp.ua/ext/dict.json",
 	};
+	
+chrome.extension.onMessage.addListener (function (req) {
+	// Get a request for run this script
+   if (req == 'get me a dictionary') {
+       checkDict ();
+	}
+});
+
 // Load and write a dictionary
 function setDict () {
 	fetch (config.dictUrl)          
-		.then (response => {response.json()})
-		.then ( dict => {
+		.then (response => {
+			let dictRes = response.json();
+			return dictRes;
+		}).then ( dictRes => {
 			// Write a dictionary to chrome.storage
-			alert ('set dict');
+			let dict = dictRes;
 			chrome.storage.local.set({dictionary: dict});
-		})
+		});
 };
 
 function checkDict () {
-	// Check is a dicionary exist
+	// Check is a dictionary exist
     chrome.storage.local.get (['dictionary'], function (res) {
         if (!res.dictionary) {setDict ()}
     });
@@ -23,7 +33,8 @@ function checkDict () {
 
 // Extension functions - not for use in general code
 
-function dictRead (dictRes) { 		// Read a dictionary for check in any function
+// Read a dictionary for check in any function
+function dictRead (dictRes) { 		
 	for (let i in dictRes) {
 		let dictResI = dictRes[i];
 		//alert(i);
@@ -33,4 +44,4 @@ function dictRead (dictRes) { 		// Read a dictionary for check in any function
 			alert (dictResI[j]);
 		}
 	}
-};
+}
