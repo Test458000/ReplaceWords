@@ -3,13 +3,6 @@
 const config = {
 	dictUrl : "http://sbox.pp.ua/ext/dict.json",
 	};
-	
-chrome.extension.onMessage.addListener (function (req) {
-	// Get a request for run this script
-   if (req == 'get me a dictionary') {
-       checkDict ();
-	}
-});
 
 // Load and write a dictionary
 function setDict () {
@@ -31,17 +24,19 @@ function checkDict () {
     });
 };
 
+checkDict ();
+
 // Extension functions - not for use in general code
 
 // Read a dictionary for check in any function
 function dictRead (dictRes) { 		
 	for (let i in dictRes) {
 		let dictResI = dictRes[i];
-		//alert(i);
-		//alert(dictRes[i]);
+		//console.logalert(i);
+		//console.logalert(dictRes[i]);
 		for (let j in dictResI) {
-			alert (j);
-			alert (dictResI[j]);
+            console.log (j);
+            console.log (dictResI[j]);
 		}
 	}
 }

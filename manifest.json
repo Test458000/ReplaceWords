@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "ReWords",
 	"description": "Replace some words in a web page using an inner dictionary",
-	"version": "2.1",
+	"version": "2.2",
 	"icons": {"64": "icon-64.png"},
 	"permissions": [
           "storage",

@@ -1,10 +1,7 @@
 chrome.storage.local.get (['dictionary'], function (res) {
     if (res.dictionary) {
-		let dict = res.dictionary;
-        replaceWords(dict);
-	} else {
-		chrome.extension.sendMessage('get me a dictionary')
-	};
+        replaceWords(res.dictionary);
+    }
 });
 
 function replaceWords (dict) {
@@ -13,7 +10,6 @@ function replaceWords (dict) {
 	let bodyPage = document.body.innerHTML; //body change
     let titlePage = document.title;	 //title change
     let textArr = bodyPage.match(/>(.*?)</g);
-	//alert (bodyPage);
 	// Loops for language
     for (let i in dict) {
         let dictI = dict[i];
@@ -23,8 +19,6 @@ function replaceWords (dict) {
             for (let n = 0; n < textArr.length; n++) {
                 if (textArr[n].indexOf(j) !== -1) {
                     textReplace[n] = textArr[n].replace(new RegExp(j, "g"), dictI[j]);
-					//alert (textReplace[n]);
-					//alert ('hello');
                     titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
                     bodyPage = bodyPage.replace(textArr[n], textReplace[n]);
                 }
@@ -41,8 +35,8 @@ function replaceWords (dict) {
 function dictRead(dictRes) { 		
 	for (let i in dictRes) {
 		let dictResI = dictRes[i];
-		//alert(i);
-		//alert(dictRes[i]);
+		//console.log(i);
+		//console.log(dictRes[i]);
 		for (let j in dictResI) {
 			alert (j);
 			alert (dictResI[j]);
