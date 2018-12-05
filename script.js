@@ -1,45 +1,40 @@
 chrome.storage.local.get (['dictionary'], function (res) {
     if (res.dictionary) {
-        replaceWords(res.dictionary);
+        useDictionary(res.dictionary);
     }
 });
 
-function replaceWords (dict) {
+function useDictionary (dictionary) {
 	// Replace words on a page from dictionary
-	let textReplace = [];
-	let bodyPage = document.body.innerHTML; //body change
-    let titlePage = document.title;	 //title change
-    let textArr = bodyPage.match(/>(.*?)</g);
-	// Loops for language
+    let node = document.body;
+    let dict = dictionary;
+    walkDom (node, replaceWords(node, dict));
+}
+
+//Walk on each element into DOM
+function walkDom (elem, fn) {
+    for (let n = 0; n < elem.childNodes.length; n++) {
+        let node = elem.childNodes[n];
+        if (node.nodeType === 3) {
+            fn(node);
+        } else if (node.nodeType === 1 && node.nodeName !== "SCRIPT") {
+            walkDom(node, fn);
+        }
+    }
+}
+
+//Replace words in a text on a HTML-page
+function replaceWords (node, dict) {
+    let titlePage = document.title;
     for (let i in dict) {
         let dictI = dict[i];
         // Loops for replace words for this language
         for (let j in dictI) {
             // Loops each text for replace words and replace text
-            for (let n = 0; n < textArr.length; n++) {
-                if (textArr[n].indexOf(j) !== -1) {
-                    textReplace[n] = textArr[n].replace(new RegExp(j, "g"), dictI[j]);
-                    titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
-                    bodyPage = bodyPage.replace(textArr[n], textReplace[n]);
-                }
-            }
+            const textInNode = node.textContent;
+            node.textContent = textInNode.replace(new RegExp(j, "g"), dictI[j]);
+            titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
         }
     }
-	document.body.innerHTML = bodyPage;
-	document.title = titlePage;
-}
-
-// Extension functions - not for use in general code
-
-// Read a dictionary for check in any function
-function dictRead(dictRes) { 		
-	for (let i in dictRes) {
-		let dictResI = dictRes[i];
-		//console.log(i);
-		//console.log(dictRes[i]);
-		for (let j in dictResI) {
-			alert (j);
-			alert (dictResI[j]);
-		}
-	}		
+    document.title = titlePage;
 }
