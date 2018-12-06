@@ -20,7 +20,6 @@ function walkDom (elem, dict, replaceWords) {
 }
 
 function replaceWords (node, dict) {
-    this.node = node;
     let titlePage = document.title;
     for (let i in dict) {
         let dictI = dict[i];
