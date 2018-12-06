@@ -2,12 +2,12 @@ chrome.storage.local.get (['dictionary'], function (res) {
     if (res.dictionary) {
         let node = document.body;
         let dict = res.dictionary;
-        walkDom (node, dict);
+        walkDom (node, dict, replaceWords);
     }
 });
 
 //Walk on each element into DOM
-function walkDom (elem, dict) {
+function walkDom (elem, dict, replaceWords) {
     this.elem = elem;
     this.dict = dict;
     for (let n = 0; n < elem.childNodes.length; n++) {
@@ -15,7 +15,7 @@ function walkDom (elem, dict) {
         if (node.nodeType === 3) {
             replaceWords (node, dict);
         } else if (node.nodeType === 1 && node.nodeName !== "SCRIPT") {
-            walkDom(node, replaceWords);
+            walkDom(node, dict, replaceWords);
         }
     }
 }
@@ -28,9 +28,11 @@ function replaceWords (node, dict) {
         // Loops for replace words for this language
         for (let j in dictI) {
             // Loops each text for replace words and replace text
-            let textInNode = node.data;
-            node.data = textInNode.replace(new RegExp(j, "g"), dictI[j]);
-            titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
+            if (node.data.indexOf(j)!== -1) {
+                let textInNode = node.data;
+                node.data = textInNode.replace(new RegExp(j, "g"), dictI[j]);
+                titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
+            }
         }
     }
     document.title = titlePage;
