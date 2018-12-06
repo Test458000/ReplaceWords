@@ -25,18 +25,3 @@ function checkDict () {
 };
 
 checkDict ();
-
-// Extension functions - not for use in general code
-
-// Read a dictionary for check in any function
-function dictRead (dictRes) { 		
-	for (let i in dictRes) {
-		let dictResI = dictRes[i];
-		//console.logalert(i);
-		//console.logalert(dictRes[i]);
-		for (let j in dictResI) {
-            console.log (j);
-            console.log (dictResI[j]);
-		}
-	}
-}
