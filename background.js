@@ -15,13 +15,13 @@ function setDict () {
 			let dict = dictRes;
 			chrome.storage.local.set({dictionary: dict});
 		});
-};
+}
 
 function checkDict () {
 	// Check is a dictionary exist
     chrome.storage.local.get (['dictionary'], function (res) {
         if (!res.dictionary) {setDict ()}
     });
-};
+}
 
 checkDict ();
