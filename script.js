@@ -21,15 +21,15 @@ function walkDom(elem, dict, replaceWords) {
 
 function replaceWords(node, dict) {
     let titlePage = document.title;
-    for (let i in dict) {
-        let dictI = dict[i];
+    for (let lang in dict) {
+        let dictForLang = dict[lang];
         // Loops for replace words for this language
-        for (let j in dictI) {
+        for (let word in dictForLang) {
             // Loops each text for replace words and replace text
-            if (node.data.indexOf(j) !== -1) {
+            if (node.data.indexOf(word) !== -1) {
                 let textInNode = node.data;
-                node.data = textInNode.replace(new RegExp(j, "g"), dictI[j]);
-                titlePage = titlePage.replace(new RegExp(j, "g"), dictI[j]);
+                node.data = textInNode.replace(new RegExp(word, "g"), dictForLang[word]);
+                titlePage = titlePage.replace(new RegExp(word, "g"), dictForLang[word]);
             }
         }
     }
